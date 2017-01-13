@@ -2,7 +2,7 @@
 
 * The presentation can be found at https://kollatzthomas.github.io/20170108_Variable_vs_Datei/
 
-* Released under [CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/), @kol_t
+* Released under [CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/), [@kol_t](https://twitter.com/kol_t)
 
 # boilerplate
 
