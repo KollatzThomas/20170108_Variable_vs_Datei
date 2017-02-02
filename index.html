@@ -62,13 +62,14 @@
         </div>
         <div id="impress">
             <div class="step">
-                <h4><strong>8.1.2017</strong> | <a href="#">Weingarten</a></h4>
+                <h4><strong>8.1.2017</strong> | <a href="http://www.tustep.uni-tuebingen.de/wein17.html">Weingarten</a></h4>
                 <h4><strong>TUSTEP workshop</strong></h4>
                 <h1 class="down-100">Variable versus Datei</h1>
                 <h2 class="red up-25">Datenverarbeitung mit TUSCRIPT</h2>
                 <h4 class="down-100">
                     <strong>Slides:</strong>
-                    <a href="#" title="View the presentation online"> https://kollatzthomas.github.io/20170108_Variable_vs_Datei </a>
+                    <a href="#" title="View the presentation online">
+                        https://kollatzthomas.github.io/20170108_Variable_vs_Datei </a>
                 </h4>
                 <h5>
                     <strong><a href="http://orcid.org/0000-0003-1904-1841">Thomas
@@ -106,9 +107,14 @@ id="id=hha-5050-teip5"
 query=CONCAT  ("id=",id)
 daten=REQUEST (url,query)
 daten=DECODE (daten,utf8)
+TRACE *daten
 </code></pre>
-                <p> Demo: <a href="#">get_person_2</a>
-                </p>
+                <blockquote class="medium"><ul>
+                        <li><code>copy</code> lines 1-6</li>
+                        <li><code>paste</code> in TUSTEP-Editor</li>
+                        <li>Ausführen <code>x #ma,&lt;editor&gt;</code></li>
+                    </ul><!-- <a href="#">get_person_2</a> -->
+                </blockquote>
             </div>
             <div class="step">
                 <div class="row">
@@ -150,9 +156,71 @@ ACCESS q: READ/STREAM/VARIABLE daten    s, a+t+e,typ,tree
 ENDACCESS/PRINT q
 ENDCOMPILE
 </code></pre>
-                <p> Demo: <a href="#">get_person_3</a> | <a href="#">get_person_4</a>
-                </p>
+               <!-- <p><a href="#">get_person_3</a> | <a href="#">get_person_4</a>
+                </p> -->
+                <blockquote class="medium"><ul>
+                    <li><code>copy</code> lines 1-8</li>
+                    <li><code>paste</code> in TUSTEP-Editor</li>
+                    <li>Ausführen <code>x #ma,&lt;editor&gt;</code></li>
+                </ul>
+                </blockquote>
             </div>
+            <div class="step"><h3 class="red up-25 after-50">Variable im direkten Zugriff <em>wie eine Datei</em>
+                einlesen und verarbeiten</h3><pre>
+<code class="linenumbers js">$$ MODE TUSCRIPT,{}
+id="hha-5050-tei"
+url="http://steinheim-institut.de/cgi-bin/epidat"
+query=CONCAT ("id=",id)
+
+daten=REQUEST (url,query)
+daten=DECODE (daten,UTF)
+
+COMPILE
+ACCESS q: READ/STREAM/VARIABLE daten    s, a+t+e,typ,tree
+LOOP
+READ/EXIT q
+PRINT/COLOR:F9 tree
+ENDLOOP
+ENDACCESS/PRINT q
+ENDCOMPILE
+</code></pre>
+                <blockquote class="medium"><ul>
+                    <li><code>copy</code> lines 1-15</li>
+                    <li><code>paste</code> in TUSTEP-Editor</li>
+                    <li>Ausführen <code>x #ma,&lt;editor&gt;</code></li>
+                </ul>
+                </blockquote><!-- get_person_3 -->
+            </div>
+            <div class="step"><h3 class="red up-25 after-50">Variable im direkten Zugriff <em>wie eine Datei</em>
+                einlesen und verarbeiten</h3>
+<pre><code class="linenumbers js">$$ MODE TUSCRIPT,{}
+id="hha-5050-tei", url="http://steinheim-institut.de/cgi-bin/epidat"
+query=CONCAT ("id=",id)
+daten=REQUEST (url,query), daten=DECODE (daten,UTF)
+
+BUILD S_TABLE a=":&lt;person*&gt;:&lt;listRelation&gt;:"
+BUILD S_TABLE e=":&lt;/listRelation&gt;:&lt;/person&gt;:"
+
+person=relation=*
+COMPILE
+ACCESS q: READ/STREAM/VARIABLE daten s, a/a+t+e/e,typ,tree
+ LOOP
+  READ/EXIT q
+  IF (typ!=3) CYCLE
+    IF (a.sw."&lt;person") THEN
+      content=CONCAT (a,t,e)
+      person=APPEND(person,content)
+    ELSEIF (t.sw."&lt;relation") THEN
+      relation=APPEND(relation,t)
+    ENDIF
+ ENDLOOP
+ENDACCESS/PRINT q
+ENDCOMPILE
+
+TRACE *person,relation
+</code>
+</pre><!-- get_person_4 -->
+</div>
             <div class="step">
                 <div class="row">
                     <dl class="medium">
@@ -185,8 +253,37 @@ daten="irgendetwas neues"
 status=WRITE(path2file,daten)
 </code></pre></dd>
                 </dl>
-                <p> Demo: <a href="#">readwrite</a>
-                </p>
+              </div>
+            <div class="step">
+                <h3 class="red up-25 after-50">Dateiinhalte auf Variable laden ohne open/close</h3>
+                <pre>
+<code class="linenumbers js">$$ MODE TUSCRIPT
+file="hha-5040-tei"
+path2file=FULLNAME(TUSTEP,file,-std-)
+status=READ(path2file,content)
+
+ASK "Inhalt anzeigen?",answer=""
+IF (answer.ab."j","y") THEN
+ TRACE *content
+ENDIF
+
+ASK "Soll die Datei mit neuem Inhalt überschrieben werden?",answer=""
+IF (answer.ab."j","y") THEN
+ mld="Bitte geben Sie neuen Text ein:"
+ content_new=*
+ e=EDIT (0:0,a0-a0-70-e0,mld,content_new,0,0)
+ IF (e=="CR","ENTER") THEN
+   status=WRITE(path2file,content_new)
+   TRACE *content_new
+ ENDIF
+ENDIF
+</code></pre>
+                <blockquote class="medium"><ul>
+                    <li><code>copy</code> lines 1-19</li>
+                    <li><code>paste</code> in TUSTEP-Editor</li>
+                    <li>Ausführen <code>x #ma,&lt;editor&gt;</code></li>
+                </ul>
+                </blockquote><!-- readwrite -->
             </div>
             <div class="step">
                 <div class="row">
@@ -246,8 +343,8 @@ status=RENAME(segment,segment_neu,-,segmentfile)
 status=DELETE(segment_neu,-,segmentfile)
 </code></pre></dd>
                 </dl>
-                <p> Demo: <a href="http://localhost/cgi-bin/edit3">CGI-Eingabeformular</a>
-                </p>
+              <!--   <p> Demo: <a href="http://localhost/cgi-bin/edit3">CGI-Eingabeformular</a>
+                </p> -->
             </div>
             <div class="step">
                 <div class="row">
@@ -288,8 +385,8 @@ status=DELETE(segment_neu,-,segmentfile)
             <div class="step">
                 <h2>Download</h2>
                 <ul class="small">
-                    <li>
-                        Link <a href="#"> https://kollatzthomas.github.io/20170108_Variable_vs_Datei </a>
+                    <li> Link <a href="#">
+                            https://kollatzthomas.github.io/20170108_Variable_vs_Datei </a>
                     </li>
                     <li> License: <a href="https://creativecommons.org/licenses/by/4.0/">CC-BY
                             4.0</a>, <a href="http://orcid.org/0000-0003-1904-1841">Thomas
