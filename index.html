@@ -329,31 +329,35 @@ SEGMENT/ERASE $segmentfile,segmentname=log170108
                         <pre>
 <code class="linenumbers js">$$ MODE TUSCRIPT
 SEGMENT/TITLE $segmentfile,segmentname="logbuch Eintrag - 170108"
-</code></pre></dd>
+</code></pre>
+                    </dd>
                     <dt>umbenennen</dt>
                     <dd>
                         <pre>
 <code class="linenumbers js">$$ MODE TUSCRIPT
 status=RENAME(segment,segment_neu,-,segmentfile)
-</code></pre></dd>
+</code></pre>
+                    </dd>
                     <dt>löschen</dt>
                     <dd>
                         <pre>
 <code class="linenumbers js">$$ MODE TUSCRIPT
 status=DELETE(segment_neu,-,segmentfile)
-</code></pre></dd>
+</code></pre>
+                    </dd>
                 </dl>
-              <!--   <p> Demo: <a href="http://localhost/cgi-bin/edit3">CGI-Eingabeformular</a>
+                <!--   <p> Demo: <a href="http://localhost/cgi-bin/edit3">CGI-Eingabeformular</a>
                 </p> -->
-            </div>
-            <div class="step">
+
                 <div class="row">
                     <dl class="medium">
                         <dt>Vorteil</dt>
                         <dd>Lesender und Schreibender Zugriff auf Segmentdatei wird nun auch
-                            ausserhalb des Editors ermöglicht</dd>
+                            ausserhalb des Editors ermöglicht
+                        </dd>
                         <dd>Segmentdateien werden damit auch für die TUSCRIPTbasierte
-                            Onlineeditionsumgebung eine Option</dd>
+                            Onlineeditionsumgebung eine Option
+                        </dd>
                     </dl>
                 </div>
             </div>
@@ -405,12 +409,13 @@ status=DELETE(segment_neu,-,segmentfile)
         <script src="vendor/codemirror/addon/edit/matchbrackets.js"></script>
         <script src="vendor/codemirror/mode/sparql/sparql.js"></script>
         <script>
-        var editor = CodeMirror.fromTextArea(document.getElementById("sparql"), {
-            mode: "application/sparql-query",
-            matchBrackets: true,
-            lineNumbers: true,
-            viewportMargin: Infinity
-        });
+            var editor;
+            editor = CodeMirror.fromTextArea(document.getElementById("sparql"), {
+                mode: "application/sparql-query",
+                matchBrackets: true,
+                lineNumbers: true,
+                viewportMargin: Infinity
+            });
     </script>
         <!-- highlight -->
         <script src="vendor/highlight/highlight.pack-9.3.0.js"></script>
