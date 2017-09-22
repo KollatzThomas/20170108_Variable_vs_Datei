@@ -168,7 +168,7 @@ ENDCOMPILE
             <div class="step"><h3 class="red up-25 after-50">Variable im direkten Zugriff <em>wie eine Datei</em>
                 einlesen und verarbeiten</h3><pre>
 <code class="linenumbers js">$$ MODE TUSCRIPT,{}
-id="hha-5050-tei"
+id="hha-5050-teip5"
 url="http://steinheim-institut.de/cgi-bin/epidat"
 query=CONCAT ("id=",id)
 
@@ -194,7 +194,7 @@ ENDCOMPILE
             <div class="step"><h3 class="red up-25 after-50">Variable im direkten Zugriff <em>wie eine Datei</em>
                 einlesen und verarbeiten</h3>
 <pre><code class="linenumbers js">$$ MODE TUSCRIPT,{}
-id="hha-5050-tei", url="http://steinheim-institut.de/cgi-bin/epidat"
+id="hha-5050-teip5", url="http://steinheim-institut.de/cgi-bin/epidat"
 query=CONCAT ("id=",id)
 daten=REQUEST (url,query), daten=DECODE (daten,UTF)
 
@@ -241,7 +241,7 @@ TRACE *person,relation
                     <dt>read</dt>
                     <dd><pre>
 <code class="linenumbers js">$$ MODE TUSCRIPT
-file="hha-5050-tei"
+file="hha-5050-teip5"
 path2file=FULLNAME(TUSTEP,file,-std-)
 status=READ(path2file,daten)
 </code></pre></dd>
@@ -258,7 +258,7 @@ status=WRITE(path2file,daten)
                 <h3 class="red up-25 after-50">Dateiinhalte auf Variable laden ohne open/close</h3>
                 <pre>
 <code class="linenumbers js">$$ MODE TUSCRIPT
-file="hha-5040-tei"
+file="hha-5040-teip5"
 path2file=FULLNAME(TUSTEP,file,-std-)
 status=READ(path2file,content)
 
