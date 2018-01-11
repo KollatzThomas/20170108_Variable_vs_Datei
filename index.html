@@ -103,8 +103,7 @@
                 <pre>
 <code class="linenumbers js">$$ MODE TUSCRIPT
 url="http://steinheim-institut.de/cgi-bin/epidat"
-id="id=hha-5050-teip5"
-query=CONCAT  ("id=",id)
+query="id=hha-5050-teip5"
 daten=REQUEST (url,query)
 daten=DECODE (daten,utf8)
 TRACE *daten
